@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from classes.models import Classes, Science, Lessons
+from classes.models import Classes, SciencesSchool, LessonsSchool
 
 # Register your models here.
 
@@ -9,19 +9,19 @@ from classes.models import Classes, Science, Lessons
 # admin.site.register(Classes)
 
 @admin.register(Classes)
-class ClassesAdmin(admin.ModelAdmin):
+class ClassesSchoolAdmin(admin.ModelAdmin):
     list_display=('name',)
     search_fields=('name',)
     ordering = ('-name',)
 
-@admin.register(Science)
-class ScienceAdmin(admin.ModelAdmin):
+@admin.register(SciencesSchool)
+class SciencesSchoolAdmin(admin.ModelAdmin):
     list_display=('scienceName', 'classes',)
     search_fields=('scienceName',)
     ordering = ('-scienceName',)
 
-@admin.register(Lessons)
-class LessonsAdmin(admin.ModelAdmin):
+@admin.register(LessonsSchool)
+class LessonsSchoolAdmin(admin.ModelAdmin):
     list_display=('lessonName', 'time', 'science','classes',)
     search_fields = ('lessonName',)
     ordering = ('-lessonName',)

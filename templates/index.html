@@ -8,15 +8,9 @@
 
     <title>{{ title }}</title>
 
-    <meta name="description"
-          content="Dashmix - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
     <meta name="robots" content="noindex, nofollow">
 
-    <meta property="og:title" content="Dashmix - Bootstrap 5 Admin Template &amp; UI Framework">
-    <meta property="og:site_name" content="Dashmix">
-    <meta property="og:description"
-          content="Dashmix - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
@@ -88,10 +82,14 @@
                                 <span class="nav-main-link-name">{{ cours.name }}</span>
                             </a>
                             <ul class="nav-main-submenu">
-                                {% for sciencename, science in sciences_list %}
+                                {% for scienceCourse, science in sciences_list %}
                                     <li class="nav-main-item">
                                         <a class="nav-main-link" href="">
-                                            {% if sciencename == cours.name %}
+                                        
+                                            <!-- Agar Science ning course ustuni va current course 
+                                             bir xil bo'lsa chiqariladi -->
+                                        
+                                            {% if scienceCourse == cours.name %}
                                                 <span class="nav-main-link-name">{{ science.name }}</span>
                                                 {% else %}
                                             {% endif %}

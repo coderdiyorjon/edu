@@ -12,7 +12,7 @@ class Classes(models.Model):
         verbose_name_plural = 'Classes'
         verbose_name = 'Class'
 
-class Science(models.Model):
+class SciencesSchool(models.Model):
     scienceName = models.CharField(max_length=100)
     classes = models.ForeignKey(to=Classes, on_delete=models.CASCADE)
 
@@ -23,12 +23,12 @@ class Science(models.Model):
         verbose_name_plural='Sciences'
         verbose_name='Science'
 
-class Lessons(models.Model):
+class LessonsSchool(models.Model):
     lessonName = models.CharField(max_length=100)
     time=models.PositiveSmallIntegerField()
     pdfFile=models.FileField(upload_to='pdfFilesSchool')
     classes = models.ForeignKey(to=Classes, on_delete=models.CASCADE)
-    science=models.ForeignKey(to=Science,on_delete=models.CASCADE)
+    science=models.ForeignKey(to=SciencesSchool,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.lessonName
