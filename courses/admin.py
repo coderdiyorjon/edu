@@ -9,7 +9,7 @@ from courses.models import Courses, SciencesUni, LessonsUni
 # admin.site.register(Courses)
 
 @admin.register(Courses)
-class ClassesUniAdmin(admin.ModelAdmin):
+class CoursesUniAdmin(admin.ModelAdmin):
     list_display=('name',)
     search_fields=('name',)
     ordering = ('-name',)
