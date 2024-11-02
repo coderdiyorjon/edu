@@ -55,6 +55,9 @@
         <div class="js-sidebar-scroll">
             <div class="content-side">
                 <ul class="nav-main">
+                
+                    <!-- School SideBar Begin -->
+                
                     <li class="nav-main-heading">Classes</li>
                     {% for class in classesSchool %}
                         <li class="nav-main-item">
@@ -63,18 +66,22 @@
                                 <span class="nav-main-link-name">{{ class.name }}</span>
                             </a>
                             <ul class="nav-main-submenu">
-                                {% for science in sciencesSchool %}
-                                    <li class="nav-main-item">
+                                {% for name,science in SciencesSchoolwithNamesClasses %}
+                                    {% if class.name == name %}
+                                        <li class="nav-main-item">
                                         <a class="nav-main-link" href="">
-                                            <span class="nav-main-link-name">{{ science.name }}</span>
+                                            <span class="nav-main-link-name">{{ science.scienceName }}</span>
                                         </a>
                                     </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </li>
                     {% endfor %}
-
-
+                    
+                    <!-- School SideBar End -->
+                    <!-- Uni SideBar Begin -->
+                    
                     <li class="nav-main-heading">Courses</li>
                     {% for cours in coursesUni %}
                         <li class="nav-main-item">
@@ -100,6 +107,9 @@
                             </ul>
                         </li>
                     {% endfor %}
+                
+                    <!-- Uni SideBar End -->    
+                
                 </ul>
             </div>
         </div>

@@ -7,18 +7,12 @@ from classes.models import Classes, SciencesSchool, LessonsSchool
 
 def index(request):
 
-    # ''' sciencesCourse massivi '''
-
-    sciences_list=[str(item.course) for item in SciencesUni.objects.all()]
     context={
-        'title':'Javlon Domla Zo\'r',
-        'coursesUni': Courses.objects.all(),
-        'lessonsUni': LessonsUni.objects.all(),
-        'sciencesUni': SciencesUni.objects.all(),
+        'title':"Javlon Domla Zo'r",
         'classesSchool': Classes.objects.all(),
-        'lessonsSchool': LessonsSchool.objects.all(),
-        'sciencesSchool': SciencesSchool.objects.all(),
-        # 'scienceStrUni': sciencestruni,
-        'sciences_list':zip(sciences_list,SciencesUni.objects.all())
+        'SciencesSchool': SciencesSchool.objects.all(),
+        'Lessonschool': LessonsSchool.objects.all(),
+        'SciencesSchoolwithNamesClasses': zip([str(name.classes) for name in SciencesSchool.objects.all()],SciencesSchool.objects.all()),
+
     }
     return render(request, 'index.html', context)
