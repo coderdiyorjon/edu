@@ -132,3 +132,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CSRF TRUSTED ORIGINS
+
+CSRF_FAILURE_VIEW = 'courses.views.csrf_failure'

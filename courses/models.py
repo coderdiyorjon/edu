@@ -26,7 +26,7 @@ class SciencesUni(models.Model):
 class LessonsUni(models.Model):
     name=models.CharField(max_length=100)
     time=models.PositiveIntegerField()
-    pdfFile=models.FileField(upload_to='pdfFilesUniversity', null=True)
+    pdfFile=models.FileField(upload_to='media/pdfFilesUniversity', null=True, blank=True)
     course=models.ForeignKey(to=Courses, on_delete=models.CASCADE)
     science=models.ForeignKey(to=SciencesUni, on_delete=models.CASCADE)
 

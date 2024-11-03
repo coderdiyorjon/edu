@@ -55,61 +55,57 @@
         <div class="js-sidebar-scroll">
             <div class="content-side">
                 <ul class="nav-main">
-                
+
                     <!-- School SideBar Begin -->
-                
+
                     <li class="nav-main-heading">Classes</li>
-                    {% for class in classesSchool %}
+                    {% for clas in classesSchool %}
                         <li class="nav-main-item">
                             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                                aria-expanded="false" href="#">
-                                <span class="nav-main-link-name">{{ class.name }}</span>
+                                <span class="nav-main-link-name">{{ clas.name }}</span>
                             </a>
                             <ul class="nav-main-submenu">
-                                {% for name,science in SciencesSchoolwithNamesClasses %}
-                                    {% if class.name == name %}
+                                {% for name, science in SciencesSchoolwithNamesClasses %}
+                                    {% if clas.name == name %}
                                         <li class="nav-main-item">
-                                        <a class="nav-main-link" href="">
-                                            <span class="nav-main-link-name">{{ science.scienceName }}</span>
-                                        </a>
-                                    </li>
+                                            <a class="nav-main-link" href="?science={{ science }}">
+                                                <span class="nav-main-link-name">{{ science }}</span>
+                                            </a>
+                                        </li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
                         </li>
                     {% endfor %}
-                    
+
+
                     <!-- School SideBar End -->
                     <!-- Uni SideBar Begin -->
-                    
+
                     <li class="nav-main-heading">Courses</li>
-                    {% for cours in coursesUni %}
+                    {% for course in coursesSchool %}
                         <li class="nav-main-item">
                             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                                aria-expanded="false" href="#">
-                                <span class="nav-main-link-name">{{ cours.name }}</span>
+                                <span class="nav-main-link-name">{{ course.name }}</span>
                             </a>
                             <ul class="nav-main-submenu">
-                                {% for scienceCourse, science in sciences_list %}
-                                    <li class="nav-main-item">
-                                        <a class="nav-main-link" href="">
-                                        
-                                            <!-- Agar Science ning course ustuni va current course 
-                                             bir xil bo'lsa chiqariladi -->
-                                        
-                                            {% if scienceCourse == cours.name %}
-                                                <span class="nav-main-link-name">{{ science.name }}</span>
-                                                {% else %}
-                                            {% endif %}
-                                        </a>
-                                    </li>
+                                {% for course_name, science in SciencesUniwithNamesCourses %}
+                                    {% if course.name == course_name %}
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link" href="?course={{ science }}">
+                                                <span class="nav-main-link-name">{{ science }}</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </li>
                     {% endfor %}
-                
-                    <!-- Uni SideBar End -->    
-                
+
+                    <!-- Uni SideBar End -->
+
                 </ul>
             </div>
         </div>
@@ -129,16 +125,19 @@
         <div id="page-header-search" class="overlay-header bg-header-dark">
             <div class="bg-white-10">
                 <div class="content-header">
-                    <form class="w-100" action="" method="POST">
+                    <form class="w-100" action="{% url 'index' %}" method="POST">
+                        {% csrf_token %}
                         <div class="input-group">
                             <button type="button" class="btn btn-alt-primary" data-toggle="layout"
                                     data-action="header_search_off">
                                 <i class="fa fa-fw fa-times-circle"></i>
                             </button>
                             <input type="text" class="form-control border-0" placeholder="Search or hit ESC.."
-                                   id="page-header-search-input" name="page-header-search-input">
+                                   id="page-header-search-input" name="page-header-search-input"
+                                   value="{{ search_query }}">
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -156,7 +155,10 @@
         <div class="bg-body-light">
             <div class="content content-full">
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                    <h1 class="flex-grow-1 fs-3 fw-semibold my-2 my-sm-3">Lessons</h1>
+                    <h1 class="flex-grow-1 fs-3 fw-semibold my-2 my-sm-3">
+                        <a href="{% url 'index' %}" style="text-decoration: none; color: inherit;">All Lessons</a>
+                    </h1>
+
 
                     <!-- <nav class="flex-shrink-0 my-2 my-sm-0 ms-sm-3" aria-label="breadcrumb">
                       <ol class="breadcrumb">
@@ -168,26 +170,93 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Table Section -->
-        
-        <div class="table-container">
-        <table>
-            <tr>
-                <th style="width: 5%;">T/r</th>
-                <th style="width: 40%;">Fan Nomi</th>
-                <th style="width: 30%;">Soati</th>
-                <th style="width: 25%;">PDF</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Matematika</td>
-                <td>10:00 AM - 11:30 AM</td>
-                <td>Matematika.pdf</td>
-            </tr>
-        </table>
-    </div>
-        
+
+        <div class="table-container" style="margin-top: 50px">
+            <h3 style="margin: 25px">
+                Classes Lessons
+            </h3>
+            <table>
+                <thead>
+                <tr>
+                    <th style="width: 5%;">T/r</th>
+                    <th style="width: 40%;">Mavzu Nomi</th>
+                    <th style="width: 30%;">Soati</th>
+                    <th style="width: 25%;">PDF</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for lesson in Lessonschool %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ lesson.lessonName }}</td>
+                        <td>{{ lesson.time }}</td>
+                        <td>
+    {% if lesson.pdfFile %}
+        <a href="{% url 'download_pdf' lesson.id %}" target="_blank" download>{{ lesson.name }}.pdf</a>
+    {% else %}
+        Fayl mavjud emas
+    {% endif %}
+</td>
+
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">Hech qanday dars topilmadi</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="table-container" style="margin-top: 50px">
+            <h3 style="margin: 25px">
+                Courses Lessons
+            </h3>
+            <table>
+                <thead>
+                <tr>
+                    <th style="width: 5%;">T/r</th>
+                    <th style="width: 40%;">Mavzu Nomi</th>
+                    <th style="width: 30%;">Soati</th>
+                    <th style="width: 25%;">PDF</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if Lessonsuni %}
+                    {% for lesson in Lessonsuni %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ lesson.name }}</td>
+                            <td>{{ lesson.time }}</td>
+                            <td>
+    {% if lesson.pdfFile %}
+        <a href="{% url 'download_pdf' lesson.id %}" target="_blank" download>{{ lesson.name }}.pdf</a>
+    {% else %}
+        Fayl mavjud emas
+    {% endif %}
+</td>
+
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">Hech qanday dars topilmadi</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">Hech qanday dars topilmadi</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+
     </main>
     <footer id="page-footer" class="bg-body-light">
         <div class="content py-0">
@@ -206,5 +275,6 @@
     </footer>
 </div>
 <script src="{% static 'js/dashmix.app.min.js' %}"></script>
+
 </body>
 </html>

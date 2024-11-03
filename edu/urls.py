@@ -17,9 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from courses.views import index
+from courses.views import index, download_pdf
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', index),
-]
+urlpatterns = [path('admin/', admin.site.urls), path('download/<int:lesson_id>/', download_pdf, name='download_pdf'),
+    path('', index, name='index'), ]

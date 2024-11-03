@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Classes(models.Model):
@@ -12,6 +13,7 @@ class Classes(models.Model):
         verbose_name_plural = 'Classes'
         verbose_name = 'Class'
 
+
 class SciencesSchool(models.Model):
     scienceName = models.CharField(max_length=100)
     classes = models.ForeignKey(to=Classes, on_delete=models.CASCADE)
@@ -20,15 +22,16 @@ class SciencesSchool(models.Model):
         return self.scienceName
 
     class Meta:
-        verbose_name_plural='Sciences'
-        verbose_name='Science'
+        verbose_name_plural = 'Sciences'
+        verbose_name = 'Science'
+
 
 class LessonsSchool(models.Model):
     lessonName = models.CharField(max_length=100)
-    time=models.PositiveSmallIntegerField()
-    pdfFile=models.FileField(upload_to='pdfFilesSchool')
+    time = models.PositiveSmallIntegerField()
+    pdfFile = models.FileField(upload_to='media/pdfFilesSchool', blank=True, null=True)
     classes = models.ForeignKey(to=Classes, on_delete=models.CASCADE)
-    science=models.ForeignKey(to=SciencesSchool,on_delete=models.CASCADE)
+    science = models.ForeignKey(to=SciencesSchool, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.lessonName
