@@ -125,8 +125,7 @@
         <div id="page-header-search" class="overlay-header bg-header-dark">
             <div class="bg-white-10">
                 <div class="content-header">
-                    <form class="w-100" action="{% url 'index' %}" method="POST">
-                        {% csrf_token %}
+                    <form class="w-100" action="{% url 'index' %}" method="GET">
                         <div class="input-group">
                             <button type="button" class="btn btn-alt-primary" data-toggle="layout"
                                     data-action="header_search_off">
@@ -137,7 +136,6 @@
                                    value="{{ search_query }}">
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -260,7 +258,7 @@
 
 
     </main>
-    <footer id="page-footer" class="bg-body-light">
+    <footer id="page-footer" class="bg-body-light" style="margin-top: 50px">
         <div class="content py-0">
             <div class="row fs-sm">
                 <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
