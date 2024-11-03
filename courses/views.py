@@ -1,21 +1,9 @@
-from django.db.models import Q
-from django.http import FileResponse
-from django.shortcuts import get_object_or_404, render
-
-from classes.models import Classes, SciencesSchool, LessonsSchool
-from courses.models import Courses, SciencesUni, LessonsUni
-
 # Create your views here.
 
-from django.http import FileResponse
-from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-from classes.models import Classes, SciencesSchool, LessonsSchool
-from courses.models import Courses, SciencesUni, LessonsUni
+from django.http import FileResponse, HttpResponse
+from django.shortcuts import get_object_or_404, render
 
-from django.http import FileResponse
-from django.shortcuts import get_object_or_404, render
-from django.db.models import Q
 from classes.models import Classes, SciencesSchool, LessonsSchool
 from courses.models import Courses, SciencesUni, LessonsUni
 
@@ -43,32 +31,29 @@ def index(request):
     if selected_course:
         lessons_uni = LessonsUni.objects.filter(science__name=selected_course)
 
-    context = {
-        'title': "Javlon Domla Zo'r",
-        'classesSchool': Classes.objects.all(),
-        'coursesSchool': Courses.objects.all(),
-        'SciencesSchoolwithNamesClasses': list(zip(
-            [str(name.classes) for name in SciencesSchool.objects.all()],
-            [science.scienceName for science in SciencesSchool.objects.all()]
-        )),
-        'SciencesUniwithNamesCourses': list(zip(
-            [str(name.course) for name in SciencesUni.objects.all()],
-            [science.name for science in SciencesUni.objects.all()]
-        )),
-        'Lessonschool': lessons_school,
-        'Lessonsuni': lessons_uni,
-        'selected_science': selected_science,
-        'selected_course': selected_course,
-        'search_query': search_query,
-    }
+    context = {'title': "Javlon Domla Zo'r", 'classesSchool': Classes.objects.all(),
+               'coursesSchool': Courses.objects.all(), 'SciencesSchoolwithNamesClasses': list(
+            zip([str(name.classes) for name in SciencesSchool.objects.all()],
+                [science.scienceName for science in SciencesSchool.objects.all()])),
+               'SciencesUniwithNamesCourses': list(zip([str(name.course) for name in SciencesUni.objects.all()],
+                                                       [science.name for science in SciencesUni.objects.all()])),
+               'Lessonschool': lessons_school, 'Lessonsuni': lessons_uni, 'selected_science': selected_science,
+               'selected_course': selected_course, 'search_query': search_query, }
 
     return render(request, 'index.html', context)
 
 
-def download_pdf(request, lesson_id):
-    lesson = get_object_or_404(LessonsSchool, id=lesson_id)
+def download_pdf(request, lesson_id, model_type):
+    if model_type == "school":
+        lesson = get_object_or_404(LessonsSchool, id=lesson_id)
+    elif model_type == "uni":
+        lesson = get_object_or_404(LessonsUni, id=lesson_id)
+    else:
+        return HttpResponse("Invalid lesson type", status=400)
+
     response = FileResponse(lesson.pdfFile.open('rb'), as_attachment=True, filename=lesson.pdfFile.name)
     return response
+
 
 def csrf_failure(request, reason=""):
     return render(request, "csrf_failure.html", {"reason": reason})

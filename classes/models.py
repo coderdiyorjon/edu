@@ -29,7 +29,7 @@ class SciencesSchool(models.Model):
 class LessonsSchool(models.Model):
     lessonName = models.CharField(max_length=100)
     time = models.PositiveSmallIntegerField()
-    pdfFile = models.FileField(upload_to='media/pdfFilesSchool', blank=True, null=True)
+    pdfFile = models.FileField(upload_to='pdfFilesSchool', blank=True, null=True)
     classes = models.ForeignKey(to=Classes, on_delete=models.CASCADE)
     science = models.ForeignKey(to=SciencesSchool, on_delete=models.CASCADE)
 

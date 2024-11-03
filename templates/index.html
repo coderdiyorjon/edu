@@ -193,12 +193,13 @@
                         <td>{{ lesson.lessonName }}</td>
                         <td>{{ lesson.time }}</td>
                         <td>
-    {% if lesson.pdfFile %}
-        <a href="{% url 'download_pdf' lesson.id %}" target="_blank" download>{{ lesson.name }}.pdf</a>
-    {% else %}
-        Fayl mavjud emas
-    {% endif %}
-</td>
+                            {% if lesson.pdfFile %}
+                                <a href="{% url 'download_pdf' 'school' lesson.id %}" target="_blank"
+                                   download>{{ lesson.lessonName }}.pdf</a>
+                            {% else %}
+                                Fayl mavjud emas
+                            {% endif %}
+                        </td>
 
                     </tr>
                 {% empty %}
@@ -232,12 +233,13 @@
                             <td>{{ lesson.name }}</td>
                             <td>{{ lesson.time }}</td>
                             <td>
-    {% if lesson.pdfFile %}
-        <a href="{% url 'download_pdf' lesson.id %}" target="_blank" download>{{ lesson.name }}.pdf</a>
-    {% else %}
-        Fayl mavjud emas
-    {% endif %}
-</td>
+                                {% if lesson.pdfFile %}
+                                    <a href="{% url 'download_pdf' 'uni' lesson.id %}" target="_blank"
+                                       download>{{ lesson.name }}.pdf</a>
+                                {% else %}
+                                    Fayl mavjud emas
+                                {% endif %}
+                            </td>
 
                         </tr>
                     {% empty %}
